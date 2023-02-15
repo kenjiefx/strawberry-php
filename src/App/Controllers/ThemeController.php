@@ -3,6 +3,7 @@
 namespace Kenjiefx\StrawberryFramework\App\Controllers;
 
 use Kenjiefx\StrawberryFramework\App\Models\ThemeModel;
+use Kenjiefx\StrawberryFramework\App\Services\DirMover;
 
 class ThemeController
 {
@@ -24,14 +25,23 @@ class ThemeController
         ob_end_clean();
     }
 
-
     private function build()
     {
         include __dir__.'/theme.functions.php';
         include $this->ThemeModel->getIndexPath();
     }
 
-    
+    public function install(
+        string $themeDirPath
+        )
+    {
+        $dirMover = new DirMover(
+            source: $themeDirPath,
+            destination: ROOT.'/theme',
+            placeholders: []
+        );
+        $dirMover->move();
+    }
 
 }
 

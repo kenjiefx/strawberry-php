@@ -34,6 +34,14 @@ class AppConfig
         return static::$config['theme'][$key] ?? NULL;
     }
 
+    public static function init()
+    {
+        $configPath = ROOT.'/'.Self::$fileName;
+        if (!file_exists($configPath)) {
+            file_put_contents($configPath,json_encode(Self::$config));
+        }
+    }
+
     public function __invoke(
         string $key
     )
