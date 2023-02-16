@@ -1,0 +1,31 @@
+<?php
+
+namespace Kenjiefx\StrawberryFramework\App\Commands;
+use Kenjiefx\StrawberryFramework\App\Builder\BuildController;
+use Kenjiefx\StrawberryFramework\App\Factory\ContainerFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+#[AsCommand(name: 'build')]
+class Build extends Command
+{
+    protected static $defaultDescription = 'Builds your app to the dist directory';
+
+    protected function execute(
+        InputInterface $input, 
+        OutputInterface $output
+        ): int
+    {
+        $buildController = ContainerFactory::create()->get(BuildController::class);
+        return Command::SUCCESS;
+    }
+
+    protected function configure(): void
+    {
+        $this->setHelp('This command allows you build your app.');
+    }
+
+
+}
