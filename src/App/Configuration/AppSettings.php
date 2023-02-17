@@ -17,6 +17,16 @@ class AppSettings
     private static string $fileName = 'strawberry.config.json';
 
     /**
+     * The name of the current active theme
+     */
+    private static string $themeName = '';
+
+    /**
+     * Build configuration manager
+     */
+    private static BuildConfiguration $buildConfiguration; 
+
+    /**
      * Loads strawberry configuration file
      */
     public static function load()
@@ -31,6 +41,11 @@ class AppSettings
             if (!file_exists($path)) {
                 throw new ConfigurationException($error);
             }
+            $config = json_decode(file_get_contents($path),TRUE);
+            static::$themeName = $config['theme'] ?? 'infinity';
+            if (isset($config['build'])) {
+                static::$buildConfiguration = new BuildConfiguration($config['build']);
+            }
             static::$hasLoaded = true;
         }
         
@@ -43,4 +58,16 @@ class AppSettings
     {
         return static::$fileName;
     }
+
+    public static function getThemeName()
+    {
+        return static::$themeName;
+    }
+
+    public static function build()
+    {
+        return static::$buildConfiguration;
+    }
+
+
 }

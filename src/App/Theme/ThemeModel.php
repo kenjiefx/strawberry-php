@@ -20,4 +20,23 @@ class ThemeModel
      * The date this theme has been created
      */
     private int $createdAt;
+
+    private string $html;
+
+    public function __construct()
+    {
+
+    }
+
+    public function setThemeName(
+        string $themeName
+        )
+    {
+        $this->name = $themeName;
+    }
+
+    public function getThemeDir()
+    {
+        return ROOT.'/theme/'.$this->name;
+    }
 }

@@ -19,6 +19,7 @@ class Build extends Command
         ): int
     {
         $buildController = ContainerFactory::create()->get(BuildController::class);
+        $buildController->build();
         return Command::SUCCESS;
     }
 
